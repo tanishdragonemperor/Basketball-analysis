@@ -1,0 +1,9 @@
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "cd frontend && npm run deploy",
+    "buildCommand": "cd frontend && npm install && npm run build"
+  }
+}
