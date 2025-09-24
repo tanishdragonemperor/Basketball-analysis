@@ -99,19 +99,19 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy {
     // Court is 50 feet wide, so scale to fit the container
     // Center the court horizontally
     const courtWidth = 50; // feet
-    const containerWidth = 400; // pixels (approximate)
+    const containerWidth = 800; // pixels (max-width from CSS)
     const scale = containerWidth / courtWidth;
     return (x + 25) * scale; // +25 to center (court goes from -25 to +25)
   }
 
   getCourtY(y: number): number {
     // Convert court coordinates to pixel positions
-    // Court is 30 feet long, so scale to fit the container
+    // Court is 47 feet long (full court), so scale to fit the container
     // Center the court vertically
-    const courtLength = 30; // feet
-    const containerHeight = 400; // pixels (approximate)
+    const courtLength = 47; // feet
+    const containerHeight = 500; // pixels (height from CSS)
     const scale = containerHeight / courtLength;
-    return (y + 15) * scale; // +15 to center (court goes from -15 to +15)
+    return (y + 23.5) * scale; // +23.5 to center (court goes from -23.5 to +23.5)
   }
 
   getRankText(rank: number | undefined): string {
