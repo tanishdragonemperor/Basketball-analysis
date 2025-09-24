@@ -39,7 +39,7 @@ class Command(BaseCommand):
     def load_teams(self):
         """Load teams data from teams.json"""
         self.stdout.write('Loading teams...')
-        teams_path = os.path.join(os.path.dirname(__file__), '..', '..', 'raw_data', 'teams.json')
+        teams_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'teams.json')
         
         with open(teams_path, 'r') as f:
             teams_data = json.load(f)
@@ -60,7 +60,7 @@ class Command(BaseCommand):
     def load_players(self):
         """Load players data from players.json"""
         self.stdout.write('Loading players...')
-        players_path = os.path.join(os.path.dirname(__file__), '..', '..', 'raw_data', 'players.json')
+        players_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'players.json')
         
         with open(players_path, 'r') as f:
             players_data = json.load(f)
@@ -81,7 +81,7 @@ class Command(BaseCommand):
     def load_games(self):
         """Load games data from games.json"""
         self.stdout.write('Loading games...')
-        games_path = os.path.join(os.path.dirname(__file__), '..', '..', 'raw_data', 'games.json')
+        games_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'games.json')
         
         with open(games_path, 'r') as f:
             games_data = json.load(f)
@@ -103,7 +103,7 @@ class Command(BaseCommand):
     def load_shots(self):
         """Load shots data from games.json"""
         self.stdout.write('Loading shots...')
-        games_path = os.path.join(os.path.dirname(__file__), '..', '..', 'raw_data', 'games.json')
+        games_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'games.json')
         
         with open(games_path, 'r') as f:
             games_data = json.load(f)
@@ -128,7 +128,7 @@ class Command(BaseCommand):
     def load_passes(self):
         """Load passes data from games.json"""
         self.stdout.write('Loading passes...')
-        games_path = os.path.join(os.path.dirname(__file__), '..', '..', 'raw_data', 'games.json')
+        games_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'games.json')
         
         with open(games_path, 'r') as f:
             games_data = json.load(f)
@@ -156,7 +156,7 @@ class Command(BaseCommand):
     def load_turnovers(self):
         """Load turnovers data from games.json"""
         self.stdout.write('Loading turnovers...')
-        games_path = os.path.join(os.path.dirname(__file__), '..', '..', 'raw_data', 'games.json')
+        games_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'games.json')
         
         with open(games_path, 'r') as f:
             games_data = json.load(f)
