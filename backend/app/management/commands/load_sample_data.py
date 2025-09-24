@@ -46,11 +46,8 @@ class Command(BaseCommand):
         
         for team_data in teams_data:
             team, created = Team.objects.get_or_create(
-                teamID=team_data['teamID'],
-                defaults={
-                    'name': team_data['name'],
-                    'city': team_data['city']
-                }
+                teamID=team_data['team_id'],
+                defaults={'name': team_data['name']}
             )
             if created:
                 self.stdout.write(f'  Created team: {team.name}')
@@ -67,10 +64,10 @@ class Command(BaseCommand):
         
         for player_data in players_data:
             player, created = Player.objects.get_or_create(
-                playerID=player_data['playerID'],
+                playerID=player_data['player_id'],
                 defaults={
                     'name': player_data['name'],
-                    'teamID': player_data['teamID']
+                    'teamID': player_data['team_id']
                 }
             )
             if created:
@@ -88,11 +85,9 @@ class Command(BaseCommand):
         
         for game_data in games_data:
             game, created = Game.objects.get_or_create(
-                gameID=game_data['gameID'],
+                gameID=game_data['id'],
                 defaults={
-                    'date': datetime.strptime(game_data['date'], '%Y-%m-%d').date(),
-                    'homeTeamID': game_data['homeTeamID'],
-                    'awayTeamID': game_data['awayTeamID']
+                    'date': datetime.strptime(game_data['date'], '%Y-%m-%d').date()
                 }
             )
             if created:
