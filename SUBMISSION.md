@@ -1,7 +1,7 @@
 # Submission Information
 
-Applicant Name:
+Applicant Name: Tanish Gupta
 
-Applicant Email Address:
+Applicant Email Address: tanishgupta@example.com
 
-Deployed Project URL:
+Deployed Project URL: https://frontend-production-0934.up.railway.app
