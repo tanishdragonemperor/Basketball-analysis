@@ -8,11 +8,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --output-hashing none",
+    "build": "mkdir -p dist && ng build --configuration production --output-hashing none",
+    "build:prod": "ng build --configuration production --output-hashing none",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "node server.js"
+    "deploy": "node server.js",
+    "postinstall": "npm run build"
   },
   "private": true,
   "dependencies": {
