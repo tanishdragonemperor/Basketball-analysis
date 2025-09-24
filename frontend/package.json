@@ -2,14 +2,14 @@
   "name": "frontend",
   "version": "0.0.0",
   "engines": {
-    "npm": "8.11.0",
-    "node": "16.15.1"
+    "npm": "8.19.4",
+    "node": "16.20.2"
   },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "mkdir -p dist && ng build --configuration production --output-hashing none",
-    "build:prod": "ng build --configuration production --output-hashing none",
+    "build": "mkdir -p dist && NODE_OPTIONS='--openssl-legacy-provider' ng build --configuration production --output-hashing none",
+    "build:prod": "NODE_OPTIONS='--openssl-legacy-provider' ng build --configuration production --output-hashing none",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

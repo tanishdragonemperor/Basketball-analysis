@@ -1,7 +1,7 @@
 {
     "build": {
         "builder": "NIXPACKS",
-        "buildCommand": "npm install && npm run build:prod"
+        "buildCommand": "npm install && NODE_OPTIONS='--openssl-legacy-provider' npm run build:prod"
     },
     "deploy": {
         "startCommand": "npm run deploy"
