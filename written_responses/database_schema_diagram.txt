@@ -1,0 +1,61 @@
+Database Schema Diagram
+========================
+
+TEAMS
+-----
+team_id (PK) ──┐
+name           │
+               │
+               │ 1:N
+               │
+PLAYERS        │
+-------        │
+player_id (PK) ┘
+name
+team_id (FK) ──┘
+
+GAMES
+-----
+game_id (PK) ──┐
+date           │
+               │
+               │ 1:N
+               │
+SHOTS          │
+------         │
+shot_id (PK)   │
+player_id (FK) ┘
+game_id (FK) ──┘
+points
+shooting_foul_drawn
+shot_loc_x
+shot_loc_y
+action_type
+
+PASSES
+------
+pass_id (PK)
+player_id (FK) ──┐
+game_id (FK) ────┼───┐
+completed_pass   │   │
+potential_assist │   │
+turnover         │   │
+ball_start_loc_x │   │
+ball_start_loc_y │   │
+ball_end_loc_x   │   │
+ball_end_loc_y   │   │
+action_type      │   │
+                 │   │
+TURNOVERS        │   │
+---------        │   │
+turnover_id (PK) │   │
+player_id (FK) ──┘   │
+game_id (FK) ────────┘
+tov_loc_x
+tov_loc_y
+action_type
+
+Legend:
+PK = Primary Key
+FK = Foreign Key
+1:N = One-to-Many Relationship

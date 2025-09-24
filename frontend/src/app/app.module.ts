@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 
 import {routing} from 'app/app.routing';
 import {AppComponent} from 'app/app.component';
@@ -30,6 +31,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     CommonModule,
     MatButtonModule,
     MatToolbarModule,

@@ -1,1 +1,222 @@
-<div class="placeholder">Place your content here!</div>
+<div class="player-summary-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1>Basketball Player Analytics Dashboard</h1>
+    <div class="player-selector">
+      <label for="playerId">Select Player:</label>
+      <select id="playerId" [(ngModel)]="selectedPlayerId" (change)="onPlayerIdChange()">
+        <option value="0">Michael Jordan</option>
+        <option value="1">Pound</option>
+        <option value="2">Buddy</option>
+        <option value="3">Uncle Drew</option>
+        <option value="4">Goofy</option>
+        <option value="5">David Greene</option>
+        <option value="6">Scott Howard</option>
+        <option value="7">LeBron James</option>
+        <option value="8">Chronos</option>
+        <option value="9">Brian Newall</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading player data...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-container">
+    <div class="error-message">
+      <h3>Error</h3>
+      <p>{{ error }}</p>
+      <button (click)="loadPlayerSummary()" class="retry-btn">Retry</button>
+    </div>
+  </div>
+
+  <!-- Player Summary Content -->
+  <div *ngIf="playerSummary && !loading && !error" class="content-container">
+    
+    <!-- Player Header -->
+    <div class="player-header">
+      <h2>{{ playerSummary.name }}</h2>
+      <p class="player-id">Player ID: {{ playerSummary.playerID }}</p>
+    </div>
+
+    <!-- Overall Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">{{ playerSummary.totalShotAttempts }}</div>
+        <div class="stat-label">Total Shots</div>
+        <div class="stat-rank" [style.color]="getRankColor(playerSummary.totalShotAttemptsRank)">
+          {{ getRankText(playerSummary.totalShotAttemptsRank) }} Place
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-value">{{ playerSummary.totalPoints }}</div>
+        <div class="stat-label">Total Points</div>
+        <div class="stat-rank" [style.color]="getRankColor(playerSummary.totalPointsRank)">
+          {{ getRankText(playerSummary.totalPointsRank) }} Place
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-value">{{ playerSummary.totalPasses }}</div>
+        <div class="stat-label">Total Passes</div>
+        <div class="stat-rank" [style.color]="getRankColor(playerSummary.totalPassesRank)">
+          {{ getRankText(playerSummary.totalPassesRank) }} Place
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-value">{{ playerSummary.totalPotentialAssists }}</div>
+        <div class="stat-label">Potential Assists</div>
+        <div class="stat-rank" [style.color]="getRankColor(playerSummary.totalPotentialAssistsRank)">
+          {{ getRankText(playerSummary.totalPotentialAssistsRank) }} Place
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-value">{{ playerSummary.totalTurnovers }}</div>
+        <div class="stat-label">Total Turnovers</div>
+        <div class="stat-rank" [style.color]="getRankColor(playerSummary.totalTurnoversRank)">
+          {{ getRankText(playerSummary.totalTurnoversRank) }} Place
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-value">{{ playerSummary.totalPassingTurnovers }}</div>
+        <div class="stat-label">Passing Turnovers</div>
+        <div class="stat-rank" [style.color]="getRankColor(playerSummary.totalPassingTurnoversRank)">
+          {{ getRankText(playerSummary.totalPassingTurnoversRank) }} Place
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Type Selector -->
+    <div class="action-type-selector">
+      <h3>Action Type Analysis</h3>
+      <div class="action-buttons">
+        <button 
+          *ngFor="let action of actionTypes" 
+          [class.active]="selectedActionType === action.key"
+          [style.background-color]="selectedActionType === action.key ? action.color : '#f5f5f5'"
+          [style.color]="selectedActionType === action.key ? 'white' : '#333'"
+          (click)="selectedActionType = action.key">
+          {{ action.label }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Action Type Stats -->
+    <div *ngIf="getActionTypeStats()" class="action-stats-container">
+      <div class="action-stats-header">
+        <h4>{{ getSelectedActionTypeLabel() }} Statistics</h4>
+        <div class="action-count-badge" [style.background-color]="getSelectedActionTypeColor()">
+          {{ getActionCount() }} Total Actions
+        </div>
+      </div>
+
+      <div class="action-stats-grid">
+        <div class="action-stat-item">
+          <span class="action-stat-label">Shots:</span>
+          <span class="action-stat-value">{{ getActionTypeStats()?.totalShotAttempts || 0 }}</span>
+        </div>
+        <div class="action-stat-item">
+          <span class="action-stat-label">Points:</span>
+          <span class="action-stat-value">{{ getActionTypeStats()?.totalPoints || 0 }}</span>
+        </div>
+        <div class="action-stat-item">
+          <span class="action-stat-label">Passes:</span>
+          <span class="action-stat-value">{{ getActionTypeStats()?.totalPasses || 0 }}</span>
+        </div>
+        <div class="action-stat-item">
+          <span class="action-stat-label">Potential Assists:</span>
+          <span class="action-stat-value">{{ getActionTypeStats()?.totalPotentialAssists || 0 }}</span>
+        </div>
+        <div class="action-stat-item">
+          <span class="action-stat-label">Turnovers:</span>
+          <span class="action-stat-value">{{ getActionTypeStats()?.totalTurnovers || 0 }}</span>
+        </div>
+        <div class="action-stat-item">
+          <span class="action-stat-label">Passing Turnovers:</span>
+          <span class="action-stat-value">{{ getActionTypeStats()?.totalPassingTurnovers || 0 }}</span>
+        </div>
+      </div>
+
+      <!-- Court Visualization -->
+      <div class="court-visualization">
+        <h5>Court Activity Map</h5>
+        <div class="court-container">
+          <div class="court">
+            <!-- Basketball Court Background -->
+            <div class="court-lines">
+              <div class="center-line"></div>
+              <div class="three-point-line"></div>
+              <div class="paint"></div>
+              <div class="basket"></div>
+            </div>
+            
+            <!-- Shot Markers -->
+            <div 
+              *ngFor="let shot of getActionTypeStats()?.shots" 
+              class="shot-marker"
+              [style.left]="(shot.loc[0] + 25) * 2 + 'px'"
+              [style.top]="(shot.loc[1] + 15) * 2 + 'px'"
+              [style.background-color]="shot.points > 0 ? '#4caf50' : '#f44336'"
+              [title]="'Shot: ' + shot.points + ' points at (' + shot.loc[0] + ', ' + shot.loc[1] + ')'">
+            </div>
+            
+            <!-- Pass Lines -->
+            <svg class="pass-lines" width="100%" height="100%">
+              <line 
+                *ngFor="let pass of getActionTypeStats()?.passes" 
+                [attr.x1]="(pass.startLoc[0] + 25) * 2"
+                [attr.y1]="(pass.startLoc[1] + 15) * 2"
+                [attr.x2]="(pass.endLoc[0] + 25) * 2"
+                [attr.y2]="(pass.endLoc[1] + 15) * 2"
+                [attr.stroke]="pass.isCompleted ? '#4caf50' : '#f44336'"
+                [attr.stroke-width]="pass.isPotentialAssist ? '3' : '2'"
+                [attr.stroke-dasharray]="pass.isTurnover ? '5,5' : 'none'"
+                [title]="'Pass: ' + (pass.isCompleted ? 'Completed' : 'Failed') + (pass.isPotentialAssist ? ' (Potential Assist)' : '')">
+              </line>
+            </svg>
+            
+            <!-- Turnover Markers -->
+            <div 
+              *ngFor="let turnover of getActionTypeStats()?.turnovers" 
+              class="turnover-marker"
+              [style.left]="(turnover.loc[0] + 25) * 2 + 'px'"
+              [style.top]="(turnover.loc[1] + 15) * 2 + 'px'"
+              [title]="'Turnover at (' + turnover.loc[0] + ', ' + turnover.loc[1] + ')'">
+            </div>
+          </div>
+        </div>
+        
+        <div class="court-legend">
+          <div class="legend-item">
+            <div class="legend-marker shot-made"></div>
+            <span>Made Shot</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-marker shot-missed"></div>
+            <span>Missed Shot</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-marker pass-completed"></div>
+            <span>Completed Pass</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-marker pass-failed"></div>
+            <span>Failed Pass</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-marker turnover"></div>
+            <span>Turnover</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

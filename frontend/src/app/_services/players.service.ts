@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 // import {plainToClass} from 'class-transformer';
 
 import {BaseService} from './base.service';
+import {PlayerSummary, PlayerSummaryResponse} from '../models/player-summary.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class PlayersService extends BaseService {
     super(http);
   }
 
-  getPlayerSummary(playerID: number): Observable<any> {
+  getPlayerSummary(playerID: number): Observable<PlayerSummaryResponse> {
     const endpoint = `${this.baseUrl}/playerSummary/${playerID}`;
 
     return this.get(endpoint).pipe(map(
-      (data: Object) => {
+      (data: PlayerSummary) => {
           return {
             endpoint: endpoint,
             apiResponse: data
