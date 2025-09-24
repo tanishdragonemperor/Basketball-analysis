@@ -162,8 +162,8 @@
             <div 
               *ngFor="let shot of getActionTypeStats()?.shots" 
               class="shot-marker"
-              [style.left]="(shot.loc[0] + 25) * 2 + 'px'"
-              [style.top]="(shot.loc[1] + 15) * 2 + 'px'"
+              [style.left]="getCourtX(shot.loc[0]) + 'px'"
+              [style.top]="getCourtY(shot.loc[1]) + 'px'"
               [style.background-color]="shot.points > 0 ? '#4caf50' : '#f44336'"
               [title]="'Shot: ' + shot.points + ' points at (' + shot.loc[0] + ', ' + shot.loc[1] + ')'">
             </div>
@@ -172,10 +172,10 @@
             <svg class="pass-lines" width="100%" height="100%">
               <line 
                 *ngFor="let pass of getActionTypeStats()?.passes" 
-                [attr.x1]="(pass.startLoc[0] + 25) * 2"
-                [attr.y1]="(pass.startLoc[1] + 15) * 2"
-                [attr.x2]="(pass.endLoc[0] + 25) * 2"
-                [attr.y2]="(pass.endLoc[1] + 15) * 2"
+                [attr.x1]="getCourtX(pass.startLoc[0])"
+                [attr.y1]="getCourtY(pass.startLoc[1])"
+                [attr.x2]="getCourtX(pass.endLoc[0])"
+                [attr.y2]="getCourtY(pass.endLoc[1])"
                 [attr.stroke]="pass.isCompleted ? '#4caf50' : '#f44336'"
                 [attr.stroke-width]="pass.isPotentialAssist ? '3' : '2'"
                 [attr.stroke-dasharray]="pass.isTurnover ? '5,5' : 'none'"
@@ -187,8 +187,8 @@
             <div 
               *ngFor="let turnover of getActionTypeStats()?.turnovers" 
               class="turnover-marker"
-              [style.left]="(turnover.loc[0] + 25) * 2 + 'px'"
-              [style.top]="(turnover.loc[1] + 15) * 2 + 'px'"
+              [style.left]="getCourtX(turnover.loc[0]) + 'px'"
+              [style.top]="getCourtY(turnover.loc[1]) + 'px'"
               [title]="'Turnover at (' + turnover.loc[0] + ', ' + turnover.loc[1] + ')'">
             </div>
           </div>
@@ -204,11 +204,11 @@
             <span>Missed Shot</span>
           </div>
           <div class="legend-item">
-            <div class="legend-marker pass-completed"></div>
+            <div class="legend-marker pass-line"></div>
             <span>Completed Pass</span>
           </div>
           <div class="legend-item">
-            <div class="legend-marker pass-failed"></div>
+            <div class="legend-marker pass-line-failed"></div>
             <span>Failed Pass</span>
           </div>
           <div class="legend-item">

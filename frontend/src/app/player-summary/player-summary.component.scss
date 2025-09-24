@@ -284,7 +284,7 @@
             height: 400px;
             background: #2e7d32;
             border-radius: 8px;
-            overflow: hidden;
+            overflow: visible;
 
             .court-lines {
               position: absolute;
@@ -335,13 +335,14 @@
 
             .shot-marker {
               position: absolute;
-              width: 8px;
-              height: 8px;
+              width: 10px;
+              height: 10px;
               border-radius: 50%;
               border: 2px solid white;
               transform: translate(-50%, -50%);
               cursor: pointer;
               transition: all 0.3s ease;
+              z-index: 5;
 
               &:hover {
                 transform: translate(-50%, -50%) scale(1.5);
@@ -351,14 +352,15 @@
 
             .turnover-marker {
               position: absolute;
-              width: 10px;
-              height: 10px;
+              width: 12px;
+              height: 12px;
               background: #f44336;
               border: 2px solid white;
               border-radius: 2px;
               transform: translate(-50%, -50%) rotate(45deg);
               cursor: pointer;
               transition: all 0.3s ease;
+              z-index: 5;
 
               &:hover {
                 transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
@@ -412,16 +414,20 @@
                 background: #f44336;
               }
 
-              &.pass-completed {
+              &.pass-line {
                 background: #4caf50;
                 border-radius: 0;
-                transform: rotate(45deg);
+                width: 20px;
+                height: 3px;
+                border: none;
               }
 
-              &.pass-failed {
+              &.pass-line-failed {
                 background: #f44336;
                 border-radius: 0;
-                transform: rotate(45deg);
+                width: 20px;
+                height: 3px;
+                border: none;
               }
 
               &.turnover {

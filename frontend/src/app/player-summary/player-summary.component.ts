@@ -94,6 +94,26 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy {
     return actionType ? actionType.color : '#666';
   }
 
+  getCourtX(x: number): number {
+    // Convert court coordinates to pixel positions
+    // Court is 50 feet wide, so scale to fit the container
+    // Center the court horizontally
+    const courtWidth = 50; // feet
+    const containerWidth = 400; // pixels (approximate)
+    const scale = containerWidth / courtWidth;
+    return (x + 25) * scale; // +25 to center (court goes from -25 to +25)
+  }
+
+  getCourtY(y: number): number {
+    // Convert court coordinates to pixel positions
+    // Court is 30 feet long, so scale to fit the container
+    // Center the court vertically
+    const courtLength = 30; // feet
+    const containerHeight = 400; // pixels (approximate)
+    const scale = containerHeight / courtLength;
+    return (y + 15) * scale; // +15 to center (court goes from -15 to +15)
+  }
+
   getRankText(rank: number | undefined): string {
     if (!rank) return 'N/A';
     const suffixes = ['th', 'st', 'nd', 'rd'];
