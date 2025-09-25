@@ -1,0 +1,35 @@
+
+If I were asked this in an interview, I’d frame it like this — not too technical-jargony, but showing I understand how the pieces fit together:
+
+My Approach
+If I had to design a system for an NBA team to evaluate practice performance, I’d start with the video feeds from multiple cameras in the gym. Those cameras would capture everything from different angles — overhead, sideline, and baseline — so that no player or play is hidden. To make use of that video, I’d bring in computer vision models (pose estimation, object tracking) that can detect players, track their movements, and even pick up things like shot trajectories or defensive positioning.
+
+Since practices happen every day and generate tons of footage, I’d also set up a pipeline to automatically sync and store video (probably in the cloud, or on a local server if internet bandwidth is an issue). From there, the raw data would be converted into structured information — for example, “Player X attempted a 3-point shot at this timestamp, it was contested, and it went in.” Coaches and analysts could then search, filter, and visualize this data instead of rewatching hours of footage manually.
+
+1) Technologies I’d use
+
+Computer Vision / AI: Pose estimation (e.g., OpenPose, MoveNet), player re-identification, ball tracking, and shot detection models.
+
+Wearable or sensor data (optional): GPS or UWB trackers for precise location, plus heart-rate/IMU sensors for conditioning metrics.
+
+Data pipeline & storage: Stream processing with something like Kafka (for real-time feeds), and cloud storage (AWS S3, GCP, or Azure) for video and stats.
+
+Dashboards & APIs: A web dashboard (could be built in React + Flask/FastAPI backend) where coaches can pull up insights, charts, or clips instantly.
+
+2) Data points I’d collect and how
+
+Player movement & workload: From video tracking (camera feeds) or wearables → total distance covered, speed bursts, acceleration, time spent in different zones.
+
+Shot quality & results: From ball-tracking + rim sensors → shot location, release angle, whether the shot was made or missed, defender distance at the time of the shot.
+
+Passing & decision-making: From tracking who has the ball and who receives it → pass frequency, turnovers, potential assists, how quickly the ball moves.
+
+Defense metrics: From player trajectories → how tightly a defender closes out, contest rates, help-defense rotations.
+
+Conditioning/physiology: From wearables → heart rate zones, fatigue levels, jump heights.
+
+MOST IMPORTANT: Who is the clutch player for particular types of situation in the last corner to score and make that game winner.
+
+I have also attached a system diagram I thought that can handle this kind of stuff
+
+In short: The system would combine computer vision, optional sensors, and a data pipeline to turn raw practice video into insights that coaches can use. Instead of just “Player A looked good today,” we’d have numbers: how efficient Player A’s shooting was, how many miles they ran, how quickly they rotated on defense, and so on.
