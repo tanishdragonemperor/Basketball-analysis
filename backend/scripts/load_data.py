@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Data loading script for basketball statistics database.
-This script loads data from JSON files into the normalized PostgreSQL database.
-Can be run repeatedly without duplicating data.
-"""
 
 import os
 import sys
@@ -11,10 +6,8 @@ import json
 import django
 from datetime import datetime
 
-# Add the backend directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Set up Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 django.setup()
 
@@ -22,7 +15,6 @@ from app.dbmodels.models import Team, Game, Player, Shot, Pass, Turnover
 
 
 def load_teams():
-    """Load teams data from teams.json"""
     print("Loading teams...")
     teams_path = os.path.join(os.path.dirname(__file__), '..', 'raw_data', 'teams.json')
     
@@ -43,7 +35,6 @@ def load_teams():
 
 
 def load_games():
-    """Load games data from games.json"""
     print("Loading games...")
     games_path = os.path.join(os.path.dirname(__file__), '..', 'raw_data', 'games.json')
     

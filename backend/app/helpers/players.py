@@ -6,26 +6,17 @@ from collections import defaultdict
 from app.dbmodels import models
 
 def get_player_summary_stats(player_id: str):
-    """
-    Get player summary statistics from the database.
-    Returns aggregated stats matching the sample data structure.
-    """
     try:
         player_id = int(player_id)
         player = models.Player.objects.get(player_id=player_id)
     except (ValueError, models.Player.DoesNotExist):
         return {"error": "Player not found"}
     
-    # Get all shots for the player
     shots = models.Shot.objects.filter(player=player)
     
-    # Get all passes for the player
     passes = models.Pass.objects.filter(player=player)
     
-    # Get all turnovers for the player
     turnovers = models.Turnover.objects.filter(player=player)
-    
-    # Calculate total stats
     total_shot_attempts = shots.count()
     total_points = sum(shot.points for shot in shots)
     total_passes = passes.count()
@@ -33,7 +24,6 @@ def get_player_summary_stats(player_id: str):
     total_turnovers = turnovers.count()
     total_passing_turnovers = passes.filter(turnover=True).count()
     
-    # Group by action type
     action_stats = defaultdict(lambda: {
         'totalShotAttempts': 0,
         'totalPoints': 0,
@@ -46,7 +36,6 @@ def get_player_summary_stats(player_id: str):
         'turnovers': []
     })
     
-    # Process shots by action type
     for shot in shots:
         action_type = shot.action_type
         action_stats[action_type]['totalShotAttempts'] += 1
@@ -73,7 +62,6 @@ def get_player_summary_stats(player_id: str):
             'isTurnover': pass_obj.turnover
         })
     
-    # Process turnovers by action type
     for turnover in turnovers:
         action_type = turnover.action_type
         action_stats[action_type]['totalTurnovers'] += 1
@@ -81,7 +69,6 @@ def get_player_summary_stats(player_id: str):
             'loc': [turnover.tov_loc_x, turnover.tov_loc_y]
         })
     
-    # Count actions by type (shots + passes + turnovers for each action type)
     pick_and_roll_count = (
         action_stats['pickAndRoll']['totalShotAttempts'] +
         action_stats['pickAndRoll']['totalPasses'] +
@@ -106,7 +93,6 @@ def get_player_summary_stats(player_id: str):
         action_stats['offBallScreen']['totalTurnovers']
     ) if 'offBallScreen' in action_stats else 0
     
-    # Build the response structure
     response = {
         'name': player.name,
         'playerID': player_id,
@@ -165,7 +151,6 @@ def get_ranks(player_id: str, player_summary: dict):
         passes = models.Pass.objects.filter(player=player)
         turnovers = models.Turnover.objects.filter(player=player)
         
-        # Count actions by type
         pick_and_roll_actions = (
             shots.filter(action_type='pickAndRoll').count() +
             passes.filter(action_type='pickAndRoll').count() +
@@ -202,7 +187,6 @@ def get_ranks(player_id: str, player_summary: dict):
         }
         all_player_stats.append(player_stats)
     
-    # Find current player's stats
     current_player_stats = None
     for stats in all_player_stats:
         if stats['player_id'] == player_id:
@@ -212,13 +196,10 @@ def get_ranks(player_id: str, player_summary: dict):
     if not current_player_stats:
         return {"error": "Player stats not found"}
     
-    # Calculate ranks (1-based, lower is better for most stats)
     def calculate_rank(current_value, all_values, reverse=False):
-        """Calculate rank where 1 is best"""
         sorted_values = sorted(all_values, reverse=reverse)
         return sorted_values.index(current_value) + 1
     
-    # Get all values for each stat
     all_shot_attempts = [s['totalShotAttempts'] for s in all_player_stats]
     all_points = [s['totalPoints'] for s in all_player_stats]
     all_passes = [s['totalPasses'] for s in all_player_stats]
@@ -230,7 +211,6 @@ def get_ranks(player_id: str, player_summary: dict):
     all_post_up_counts = [s['postUpCount'] for s in all_player_stats]
     all_off_ball_screen_counts = [s['offBallScreenCount'] for s in all_player_stats]
     
-    # Calculate ranks (higher is better for points, assists; lower is better for turnovers)
     ranks = {
         "totalShotAttemptsRank": calculate_rank(
             current_player_stats['totalShotAttempts'], all_shot_attempts, reverse=True

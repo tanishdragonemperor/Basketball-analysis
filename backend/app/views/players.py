@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import logging
 
 from rest_framework.response import Response
@@ -12,7 +11,6 @@ class PlayerSummary(APIView):
     logger = LOGGER
 
     def get(self, request, playerID):
-        """Return player data"""
         print(playerID)
 
         player_summary = get_player_summary_stats(player_id=playerID)

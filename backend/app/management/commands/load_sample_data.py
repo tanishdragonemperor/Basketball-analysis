@@ -6,7 +6,6 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-# Add the backend directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from app.dbmodels.models import Team, Game, Player, Shot, Pass, Turnover
@@ -37,7 +36,6 @@ class Command(BaseCommand):
             raise
 
     def load_teams(self):
-        """Load teams data from teams.json"""
         self.stdout.write('Loading teams...')
         teams_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'teams.json')
         
@@ -55,7 +53,6 @@ class Command(BaseCommand):
                 self.stdout.write(f'  Team already exists: {team.name}')
 
     def load_players(self):
-        """Load players data from players.json"""
         self.stdout.write('Loading players...')
         players_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'players.json')
         
@@ -63,7 +60,6 @@ class Command(BaseCommand):
             players_data = json.load(f)
         
         for player_data in players_data:
-            # Get the team object first
             try:
                 team = Team.objects.get(team_id=player_data['team_id'])
             except Team.DoesNotExist:
@@ -83,7 +79,6 @@ class Command(BaseCommand):
                 self.stdout.write(f'  Player already exists: {player.name}')
 
     def load_games(self):
-        """Load games data from games.json"""
         self.stdout.write('Loading games...')
         games_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'games.json')
         
@@ -103,7 +98,6 @@ class Command(BaseCommand):
                 self.stdout.write(f'  Game already exists: {game.game_id}')
 
     def load_shots(self):
-        """Load shots data from players.json"""
         self.stdout.write('Loading shots...')
         players_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'players.json')
         
@@ -141,7 +135,6 @@ class Command(BaseCommand):
         self.stdout.write(f'  Loaded {shot_count} shots')
 
     def load_passes(self):
-        """Load passes data from players.json"""
         self.stdout.write('Loading passes...')
         players_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'players.json')
         
@@ -182,7 +175,6 @@ class Command(BaseCommand):
         self.stdout.write(f'  Loaded {pass_count} passes')
 
     def load_turnovers(self):
-        """Load turnovers data from players.json"""
         self.stdout.write('Loading turnovers...')
         players_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'raw_data', 'players.json')
         

@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-"""Contains models related to stats"""
 from django.db import models
 
 
 class Team(models.Model):
-    """Team model"""
     team_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     
@@ -16,7 +13,6 @@ class Team(models.Model):
 
 
 class Game(models.Model):
-    """Game model"""
     game_id = models.IntegerField(primary_key=True)
     date = models.DateField()
     
@@ -29,7 +25,6 @@ class Game(models.Model):
 
 
 class Player(models.Model):
-    """Player model"""
     player_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='players')
@@ -42,7 +37,6 @@ class Player(models.Model):
 
 
 class Shot(models.Model):
-    """Shot attempt model"""
     ACTION_TYPES = [
         ('pickAndRoll', 'Pick and Roll'),
         ('isolation', 'Isolation'),
@@ -67,7 +61,6 @@ class Shot(models.Model):
 
 
 class Pass(models.Model):
-    """Pass attempt model"""
     ACTION_TYPES = [
         ('pickAndRoll', 'Pick and Roll'),
         ('isolation', 'Isolation'),
@@ -95,7 +88,6 @@ class Pass(models.Model):
 
 
 class Turnover(models.Model):
-    """Turnover model"""
     ACTION_TYPES = [
         ('pickAndRoll', 'Pick and Roll'),
         ('isolation', 'Isolation'),
