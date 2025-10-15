@@ -246,14 +246,3 @@ Additional documentation is available in the `written_responses/` directory:
 **Tanish Gupta**
 - Email: guptatanish336@gmail.com
 - GitHub: [@tanishdragonemperor](https://github.com/tanishdragonemperor)
-
-## 🙏 Acknowledgments
-
-- Django REST Framework for robust API development
-- Angular Material for modern UI components
-- Railway for seamless deployment
-- PostgreSQL for reliable data storage
-
----
-
-*This project demonstrates full-stack web development skills with modern frameworks, database design, API development, and deployment practices.*
