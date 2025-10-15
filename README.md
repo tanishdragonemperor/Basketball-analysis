@@ -240,9 +240,6 @@ Additional documentation is available in the `written_responses/` directory:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is part of a technical assessment for a software engineering internship position.
 
 ## 👨‍💻 Author
 
